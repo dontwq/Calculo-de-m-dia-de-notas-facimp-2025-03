@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Média</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin: auto;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        #resultado {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculadora de Média</h2>
+        <label>Nota da Prova AV (0 a 7):</label>
+        <input type="number" id="av" min="0" max="7" step="0.1">
+        
+        <label>Nota da Atividade AV A (0 a 3):</label>
+        <input type="number" id="av_a" min="0" max="3" step="0.1">
+        
+        <label>Nota do Simulado (0 a 2):</label>
+        <input type="number" id="simulado" min="0" max="2" step="0.1">
+        
+        <button onclick="calcularNota()">Calcular</button>
+        
+        <p id="resultado"></p>
+    </div>
+    
+    <script>
+        function calcularNota() {
+            let av = parseFloat(document.getElementById('av').value) || 0;
+            let av_a = parseFloat(document.getElementById('av_a').value) || 0;
+            let simulado = parseFloat(document.getElementById('simulado').value) || 0;
+            
+            if (av > 7) av = 7;
+            if (av_a > 3) av_a = 3;
+            if (simulado > 2) simulado = 2;
+            
+            let total = av + av_a + simulado;
+            if (total > 10) total = 10;
+            
+            let resultado = document.getElementById('resultado');
+            
+            if (total >= 6) {
+                resultado.innerHTML = `Nota final: ${total.toFixed(2)} - <span style='color: green;'>Aprovado!</span>`;
+            } else {
+                let avs = prompt("Aluno não atingiu a média. Digite a nota da AVS (0 a 10), ou cancele se não fez a AVS:");
+                avs = parseFloat(avs);
+                
+                if (!isNaN(avs) && avs >= 6) {
+                    resultado.innerHTML = `Nota AVS: ${avs.toFixed(2)} - <span style='color: green;'>Aprovado na recuperação!</span>`;
+                } else {
+                    resultado.innerHTML = `Nota final: ${total.toFixed(2)} - <span style='color: red;'>Reprovado.</span>`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
